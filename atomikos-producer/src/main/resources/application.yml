@@ -1,0 +1,38 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: atomikos-producer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    username: root
+    password:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true
+  jta:
+    atomikos:
+      properties:
+        max-actives: 50
+        max-timeout: 300000
+        default-jta-timeout: 10000
+        enable-logging: false
+
+dubbo:
+  application.name: atomikos-producer-consumer
+  registry.address: nacos://127.0.0.1:8848
+  config-center.address: nacos://127.0.0.1:8848
+  consumer.timeout: 3000
+  registry.check: false
+  reference.com.foo.BarService.check: false
+  consumer.check: false
+  reference.check: false
+  protocol:
+    name: dubbo
+    port: 20881
+
+dubbo.application.qosEnable: true
+dubbo.application.qosPort: 44444
+dubbo.application.qosAcceptForeignIp: false
